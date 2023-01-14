@@ -48,7 +48,7 @@ function closeHost(id, game) {
 }
 
 function placeBet(host, id, amount, type) {
-  const newBet = await CurrentBets.create({ host: id, user_id: id, amount: amount, type: currencyType });
+  const newBet = await CurrentBets.create({ host: id, user_id: id, amount: amount, type: type});
   currency.set(id, newBet);
 
   return newBet;
