@@ -35,6 +35,11 @@ function getBalance(id, type) {
 function openHost(id, game, active) {
   const user = currency.get(id);
   const active = currency.get(active);
+  
+  const newUser = await OpenHosts.create({ user_id: id, game: none, active: Boolean });
+  currency.set(id, newUser);
+
+  return newUser;
 }
 
 function closeHost(id, game) {
@@ -43,7 +48,10 @@ function closeHost(id, game) {
 }
 
 function placeBet(host, id, amount, type) {
-  
+  const newBet = await CurrentBets.create({ host: id, user_id: id, amount: amount, type: currencyType });
+  currency.set(id, newBet);
+
+  return newBet;
 }
 
 client.once(Events.ClientReady, async () => {
