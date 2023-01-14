@@ -6,7 +6,7 @@ const {
   Events,
   GatewayIntentBits,
 } = require("discord.js");
-const { Users } = require("./dbObjects.js");
+const { Users, CurrentBets, OpenHosts } = require("./dbObjects.js");
 
 const client = new Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
@@ -17,7 +17,7 @@ async function addBalance(id, amount, type) {
   const user = currency.get(id);
 
   if (user) {
-    type === "rs3" ? (user.rs3 += Number(amount)) : (user.O7 += Number(amount));
+    type === "rs3" ? (user.rs3 += Number(amount)) : type === "07" (user.O7 += Number(amount));
     return user.save();
   }
 
@@ -30,6 +30,20 @@ async function addBalance(id, amount, type) {
 function getBalance(id, type) {
   const user = currency.get(id);
   return user ? user[type] : 0;
+}
+
+function openHost(id, game, active) {
+  const user = currency.get(id);
+  const active = currency.get(active);
+}
+
+function closeHost(id, game) {
+  const user = currency.get(id);
+  return user ? user[id] : 0;
+}
+
+function placeBet(host, id, amount, type) {
+  
 }
 
 client.once(Events.ClientReady, async () => {
@@ -48,7 +62,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
   const { commandName } = interaction;
 
-  if (commandName === "balance") {
+  if (commandName === "wallet") {
     const target = interaction.options.getUser("user") ?? interaction.user;
 
     return interaction.reply(
@@ -60,7 +74,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
     const currentAmount = getBalance(interaction.user.id);
     const transferAmount = interaction.options.getInteger("amount");
     const transferTarget = interaction.options.getUser("user");
-    const currencyType = interaction.options.getString("type");
+    const currencyType = interaction.options.getString("currency-type");
 
     if (transferAmount > currentAmount[currencyType])
       return interaction.reply(
@@ -81,6 +95,48 @@ client.on(Events.InteractionCreate, async (interaction) => {
         interaction.user.id
       )}${currencyType}`
     );
+  } else if (commandName === "openhost") {
+    const game = interaction.options.getString("game");
+    const active = true;
+    
+    openHost(interaction.user.id, game, active);
+    
+  } else if (commandName === "close") {
+    
+    closeHost(interaction.user.id, game, active);
+    
+  } else if (commandName === "b") {
+    const currentAmount = getBalance(interaction.user.id);
+    const host = interaction.options.getUser ("user");
+    const transferAmount = interaction.options.getInteger("amount");
+    const currencyType = interaction.options.getString("currency-type");
+    
+    if (transferAmount > currentAmount[currencyType])
+      return interaction.reply(
+        `Sorry ${interaction.user}, you only have ${currentAmount}${currencyType}.`
+      );
+    if (transferAmount <= 0)
+      return interaction.reply(
+        `Please enter an amount greater than zero, ${interaction.user}.`
+      );
+
+    addBalance(interaction.user.id, -transferAmount, currencyType);
+    addBalance(host.id, transferAmount, currencyType);
+    placeBet(host.id, interaction.user.id, transferAmount, currencyType);
+
+    return interaction.reply(
+      `${interaction.user.id} Successfully placed ${transferAmount}${currencyType} on ${host.tag}.`
+    );
+    
+    
+  } else if (commandName === "refund") {
+    
+  } else if (commandName === "win") {
+    
+  } else if (commandName === "lose") {
+    
+  } else if (commandName === "streak") {
+    
   }
 });
 

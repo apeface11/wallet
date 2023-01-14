@@ -8,6 +8,8 @@ const sequelize = new Sequelize('database', 'username', 'password', {
 });
 
 const Users = require('./models/Users.js')(sequelize, Sequelize.DataTypes);
+const CurrentBets = require('./models/CurrentBets.js')(sequelize, Sequelize.DataTypes);
+const OpenHosts = require('./models/OpenHosts.js');
 
 
-module.exports = { Users };
+module.exports = { Users, CurrentBets, OpenHosts };
