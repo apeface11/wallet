@@ -1,4 +1,4 @@
-# Provably Fair Bot
+# Wallet Bot
 ## Summary
 This node.js based application is a discord bot that provides customizable currencies per-guild and allows gambling games to be played with those currencies. Guild owners can use the currency modification commands to customize their guild currencies. The bot configuration, config.json in the base directory, should be modified before deployment based on the environment and bot owners preferences. An [example config file](/config.json.example) has be provided.
 ## Demo
