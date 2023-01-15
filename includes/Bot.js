@@ -11,9 +11,7 @@ const CurrencyHandler = require(__dirname+'/CurrencyHandler.js');
 
 class ProvablyFairBot extends Discord.Client {
     constructor() {
-        super();
-        
-        const client = new Client({intents: [Intents.Guilds, Intents.GuildMessages, Intents.DirectMessages]});
+        super({intents: [Intents.Guilds, Intents.GuildMessages, Intents.MessageContent, Intents.DirectMessages]});
 
         global.bot = this;
 
