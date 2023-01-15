@@ -27,6 +27,11 @@ async function addBalance(id, amount, type) {
   return newUser;
 }
 
+function getType() {
+  const type 
+  return type
+}
+
 function getBalance(id, type) {
   const user = currency.get(id);
   return user ? user[type] : 0;
@@ -36,10 +41,10 @@ function openHost(id, game, active) {
   const user = currency.get(id);
   const active = currency.get(active);
   
-  const newUser = await OpenHosts.create({ user_id: id, game: none, active: Boolean });
-  currency.set(id, newUser);
+  const newHost = await OpenHosts.create({ user_id: id, game: none, active: Boolean });
+  currency.set(id, newHost);
 
-  return newUser;
+  return newHost;
 }
 
 function closeHost(id, game) {
