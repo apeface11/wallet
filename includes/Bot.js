@@ -1,6 +1,8 @@
 //'use strict';
 
 const Discord = require('discord.js');
+const Intents = require('discord.js');
+const Client = require('discord.js');
 const crypto = require('crypto');
 const pg = require('pg');
 const fs = require('fs');
@@ -10,6 +12,8 @@ const CurrencyHandler = require(__dirname+'/CurrencyHandler.js');
 class ProvablyFairBot extends Discord.Client {
     constructor() {
         super();
+        
+        const client = new Client({intents: [Intents.Guilds, Intents.GuildMessages, Intents.DirectMessages]});
 
         global.bot = this;
 
